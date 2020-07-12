@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import Senators from './components/Senators';
+import withListLoading from './components/withListLoading';
 
 function App() {
 
+  const SenatorsLoading = withListLoading(Senators);
+
   const [appState, setAppState] = useState({
-    loading: false,
+    loading_senators: false,
     senators: null,
   });
 
@@ -17,8 +20,8 @@ function App() {
     const senatorApiUrl = 'https://www.govtrack.us/api/v2/role?current=true&role_type=senator'
     fetch(senatorApiUrl)
       .then(res => res.json())
-      .then((data) => {
-        setAppState({ senators: data })
+      .then((senators) => {
+        setAppState({ loading_senators: false, senators: senators })
     });
 
     setAppState({ loading: false });
@@ -26,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <Senators senators={appState.senators} />
+      <SenatorsLoading isLoading={appState.loading_senators} senators={appState.senators} />
     </div>
   );
 }
