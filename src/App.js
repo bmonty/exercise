@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 
 import Senators from './components/Senators';
@@ -38,7 +39,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('Getting Nobel Prize Data')
+    console.log('Getting Nobel Prize data.')
 
     const nobelPrizeApiUrl = 'http://api.nobelprize.org/v1/prize.json';
 
@@ -52,23 +53,26 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <div class="container">
-          <div class="navbar-header">
-            <a href="#" class="navbar-brand">
+        <div className="container">
+          <div className="navbar-header">
+            <a href="/" className="navbar-brand">
               Second Front Exercise
             </a>
           </div>
 
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <Link class="nav-link active" to="/senators">Senators</Link>
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <Link className="nav-link active" to="/senators">Senators</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/nobel_prizes">Nobel Prizes</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/nobel_prizes">Nobel Prizes</Link>
             </li>
           </ul>
 
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/senators" />
+            </Route>
             <Route path="/senators">
               <SenatorsLoading isLoading={senatorState.loading} senators={senatorState.senators} />
             </Route>
