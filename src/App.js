@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom';
 
 import Senators from './components/Senators';
 import NobelPrizes from './components/nobelPrizes';
@@ -33,7 +39,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('Getting Nobel Prize Data')
+    console.log('Getting Nobel Prize data.')
 
     const nobelPrizeApiUrl = 'http://api.nobelprize.org/v1/prize.json';
 
@@ -45,10 +51,38 @@ function App() {
   }, []);
   
   return (
-    <div className="App">
-      <SenatorsLoading isLoading={senatorState.loading} senators={senatorState.senators} />
-      <NobelPrizeLoading isLoading={nobelPrizeState.loading} nobelPrizes={nobelPrizeState.nobelPrizes} />
-    </div>
+    <Router>
+      <div className="App">
+        <div className="container">
+          <div className="navbar-header">
+            <a href="/" className="navbar-brand">
+              Second Front Exercise
+            </a>
+          </div>
+
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <Link className="nav-link active" to="/senators">Senators</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/nobel_prizes">Nobel Prizes</Link>
+            </li>
+          </ul>
+
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/senators" />
+            </Route>
+            <Route path="/senators">
+              <SenatorsLoading isLoading={senatorState.loading} senators={senatorState.senators} />
+            </Route>
+            <Route path="/nobel_prizes">
+              <NobelPrizeLoading isLoading={nobelPrizeState.loading} nobelPrizes={nobelPrizeState.nobelPrizes} />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 

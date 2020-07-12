@@ -8,10 +8,10 @@ const NobelPrizes = (props) => {
 
     return (
         <div>
-            <center><h1>Nobel Prizes</h1></center>
+            <h1 className="text-center">Nobel Prizes</h1>
             {nobelPrizes.prizes.map((prize) => (
                 <div key={prize.year + prize.category}>
-                    <h2>{prize.year} - {prize.category}</h2>
+                    <h2 className="text-center">{prize.year} - {prize.category}</h2>
                     <LaureateTable laureates={prize.laureates} />
                 </div>
             ))}

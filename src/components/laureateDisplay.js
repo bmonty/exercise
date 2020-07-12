@@ -5,10 +5,16 @@ const LaureateTable = (props) => {
     if (!laureates) return <p>Loading...</p>
 
     return (
-        <table>
+        <table className="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Motivation</th>
+                </tr>
+            </thead>
             <tbody>
             {laureates.map((laureate) => (
-                <tr>
+                <tr key={laureate.id}>
                     <td>{laureate.firstname} {laureate.surname}</td>
                     <td>{laureate.motivation}</td>
                 </tr>
